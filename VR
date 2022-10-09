@@ -1,0 +1,11 @@
+import pandas as pd
+import numpy as np
+
+df = pd.read_csv('ITMO_STUDY/quiz_5_2_2_data.csv', index_col = [0], names=['R'])
+print(df.info())
+print()
+print(df)
+
+#df.DataFrame
+#data.columns = ['название']['Исходный ряд']
+#print(data)
