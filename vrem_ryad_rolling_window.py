@@ -8,6 +8,27 @@ print(series.info())
 print('Исходный временной ряд')
 print(series)
 
+#updating our dataFrame to have only
+# one column 'Close' as rest all columns
+# are of no use for us at the moment
+# using .to_frame() to convert pandas series
+# into dataframe.
+smothing = series['Y'].to_frame()
+ 
+# calculating simple moving average
+# using .rolling(window).mean() ,
+# with window size = 30
+smothing['SMA3'] = series['Y'].rolling(3).mean()
+ 
+# removing all the NULL values using
+# dropna() method
+smothing.dropna(inplace=True)
+ 
+# printing Dataframe
+print(smothing)
+
+'''
+
 # Пишем функцию сглаживания
 def SMA_smoothing(series, width):
     result = []
@@ -21,21 +42,21 @@ smoothed = pd.DataFrame(SMA_smoothing(series[1].to_list(),3))
 smoothed.index += 1
 print('Сглаженный временной ряд-3',smoothed.head())
 
-
-# Построим графики исходного и сглаженного рядов
 '''
+# Построим графики исходного и сглаженного рядов
+
 plt.figure(figsize=(20, 8))
-plt.plot('Y', data = df)
-plt.plot('smoothed', data = df)
+plt.plot('Y', data = smothing)
+plt.plot('SMA3', data = smothing)
 plt.xlabel('Time step')
 plt.ylabel('Y')
 #plt.show()
 
-
 # ВЫведем значение 5
-print('ВЫведем значение сглаженное и начальное значение', 5)
-print(df.loc[[5]])
+print('ВЫведем значение сглаженное', 5)
+print(smothing.loc[[5]])
 
+'''
 #smoothed = series.rolling(window=7).mean()
 #smoothed
 '''
