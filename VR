@@ -1,11 +1,13 @@
+# Коэф-т сглаживания с пом экспоненциальной ф-ии
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
 
-df = pd.read_csv('ITMO_STUDY/quiz_5_2_2_data.csv', index_col = [0], names=['R'])
+df = pd.read_csv('/Users/ekaterina/github_repos/ITMO_STUDY/quiz_5_2_3_data.csv', index_col = [0], names=['Y'])
 print(df.info())
 print()
 print(df)
+
 
 def exponential_smoothing(df, alpha):
     result = [df[0]]
@@ -13,18 +15,35 @@ def exponential_smoothing(df, alpha):
         result.append(alpha * df[index] + (1 - alpha) * result[index - 1]) 
     return result
 
-df['R_exp_norm_user'] = exponential_smoothing(df['R'].to_list(), 0.19)
+# Определяем коэффициенты сглаживания с пом эксп функции с коэф-ми 0.1 и 0.3
 
-print(df)
+df['y_exp_norm_0.1'] = df['Y'].ewm(alpha=0.1, adjust=False).mean()
+df['y_exp_norm_0.3'] = df['Y'].ewm(alpha=0.3, adjust=False).mean()
+print("Коэффициенты сглаживания с пом эксп функции с коэф-ми 0.1 и 0.3", df)
 
-# Построим графики исходного и сглаженного рядов
+# ВЫведем значение 5
+print('ВЫведем значение сглаженное и начальное значение', 5)
+print(df.loc[[5]])
+
+# ВЫведем значение только сглаженное значение 5
+print('ВЫведем значение только сглаженное значение', 5)
+print(df['y_exp_norm_user'].loc[[5]])
+
+
+
+
+
+
+
+
+
 
 plt.figure(figsize=(20, 8))
-plt.plot('R', data = df)
-plt.plot('R_exp_norm_user', data = df)
+plt.plot('Y', data = df)
+plt.plot('Y_exp_norm_user', data = df)
 plt.xlabel('Time step')
-plt.ylabel('R')
-#plt.show()
+plt.ylabel('Y')
+plt.show()
 
 # ВЫведем значение 5
 print('ВЫведем значение сглаженное и начальное значение', 5)
@@ -38,10 +57,7 @@ print(df['R_exp_norm_user'].loc[[5]])
 R5 = df['R_exp_norm_user'].loc[[5]]
 round(R5, 2)
 
-#Теперь проведем экспоненциальное сглаживание нашего временного ряда, используя [функцию](https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.ewm.html) 
 
-# результат запишем в новый столбец ['y_exp_norm']
-df['R_exp_norm'] = df['R'].ewm(alpha=0.19, adjust=False).mean()
 
 plt.figure(figsize=(20, 8))
 plt.plot('R', data = df)
@@ -50,6 +66,7 @@ plt.plot('R_exp_norm_user', data = df)
 plt.xlabel('Time step')
 plt.ylabel('R')
 plt.show()
+
 
 #Рассмотрим отдельно значения временного ряда и соответсвующие им временные метки.
 # Преобразуем тип данных в массив <code>numpy</code>:
@@ -85,10 +102,6 @@ plt.show()
 ## $R^{2}=1-\frac{\sum\limits_{i=1}^{n}\left(y_{i}-f_{i}\right)^{2}}{\sum\limits_{i=1}^{n}\left(y_{i}-y_{\mathrm{avg}}\right)^{2}}$
 
 
-
-
-
-
 f_i = df['lin_trend']
 y_avg = df['y'].mean()
 
@@ -98,6 +111,23 @@ round(R2, 3)
 # Спрогнозируем 101 член
 y_101 = a * 101 + b
 round(y_101, 0)
+
+'''
+# Определяем коэффициенты сглаживания с пом эксп функции с коэф-ми 0.1 и 0.3
+
+df['y_exp_norm_0.1'] = df['Y'].ewm(alpha=0.1, adjust=False).mean()
+df['y_exp_norm_0.3'] = df['Y'].ewm(alpha=0.3, adjust=False).mean()
+print("Коэффициенты сглаживания с пом эксп функции с коэф-ми 0.1 и 0.3", df)
+
+# ВЫведем значение 5
+print('ВЫведем значение сглаженное и начальное значение', 5)
+print(df.loc[[5]])
+
+# ВЫведем значение только сглаженное значение 5
+print('ВЫведем значение только сглаженное значение', 5)
+print(df['y_exp_norm_user'].loc[[5]])
+
+
 
 ##### SMA
 
@@ -124,3 +154,6 @@ smoothed.head()
 
 smoothed = series.rolling(window=7).mean()
 smoothed
+'''
+
+
