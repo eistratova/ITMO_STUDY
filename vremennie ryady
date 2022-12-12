@@ -1,0 +1,18 @@
+from operator import index
+from tkinter import VERTICAL
+import pandas as pd 
+# Библиотеки для визуализации
+import numpy as np
+import matplotlib.pyplot as plt
+import matplotlib as mpl
+
+path = '//Users/ekaterina/github_repos/ITMO_STUDY/quiz_5_2_2_data.csv'
+df =  pd.read_csv(path)
+
+
+#data_series.info()
+print(df)
+
+
+#data_series.index += 1 
+#print('Изменили индекс',df)
