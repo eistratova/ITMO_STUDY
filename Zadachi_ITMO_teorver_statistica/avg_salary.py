@@ -15,7 +15,7 @@ df = pd.read_excel('/Users/ekaterina/data4repos/AVG_salary2.xlsx', header=None)
 print(df)
 df.info()
 
-'''
+
 # По условиям задачи нам необхоимо избавиться от 3 регионов
 # для этого сначала удостоверимся-есть ли они там
 mask = df[(df[0] == 'Республика Татарстан') | (df[0] == 'Республика Марий Эл')]
@@ -23,6 +23,7 @@ print(mask)
 
 df_new = df[(df[0] != 'Республика Татарстан') & (df[0] != 'Республика Марий Эл')]
 df_new
+
 
 # Отсортируем данные по объему зп
 df_new = df_new.sort_values(by=[1])
@@ -34,9 +35,10 @@ print(df_new)
 #  У нас индекс начинается с 0, нам надо с 1, для этого повысим индекс
 df_new.index += 1
 print(df_new.head(20))
+print("Инфо новая таблица без 2 регионов", df_new.info())
 
 # Выводим требуемые элементы вариационного ряда
-print("21, 22,27 элементы", df_new.loc[[21, 22, 77]])
+print("21, 22,77 элементы", df_new.loc[[21, 22, 77]])
 
 
 print("Строим гистограмму", plt.hist(df_new[1], bins=10))
@@ -49,11 +51,8 @@ print("Дисперсия несмещенная", np.var(df_new[1], ddof=1))
 
 
 print("квантиль середина 0,5", np.quantile(df_new[1], 0.5))
-print("квантиль 0,25", np.quantile(df_new[1], 0.25))
-
-print("квантиль 0,75", np.quantile(df_new[1], 0.75))
-'''
-'''
+print("квантиль 0,25", np.quantile(df_new[1], 0.25, method='nearest'))      
+print("quantil 0.75", np.quantile(df_new[1], 0.75, method='nearest'))
 #n = 10
 #aº = 26
 #e = 0.01
@@ -67,4 +66,3 @@ print("квантиль 0,75", np.quantile(df_new[1], 0.75))
 
 # If P(x)< c
 #print("Гипотезу принимаем")
-'''
