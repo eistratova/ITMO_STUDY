@@ -1,22 +1,28 @@
+'''
+Производитель соков «СокОК» заявляет, что объем сока в каждой произведенной им упаковке 
+составляет ровно литр. Экспертная комиссия конкурса «Товар года» произвела контрольную закупку n=20 
+упаковок и измерила точный объем сока в каждой пачке. Считая, что распределение объема сока 
+подчиняется нормальному закону, подтвердите или опровергните гипотезу о среднем  1000 мл 
+при уровне значимости e=0.05.
+
+Введите выборочное среднее :
+Введите ответ с точностью до трех знаков.
+Введите оценку среднеквадратического отклонения S_0:
+Введите модуль функции отклонения Po(X):
+
+'''
+
 from calendar import c
 import pandas as pd
-from scipy.stats import t
+from scipy.stats import norm,t
 from matplotlib import pyplot as plt
 import numpy as np
-'''
-df = pd.read_csv('/Users/ekaterina/data4repos/hypothesis_2.csv')
-#print(df)
 
-df.index += 1
-print(df.head(20))
-
-print(t.ppf(1-0.05/2, 99))
-'''
-df_juce = pd.read_csv('/Users/ekaterina/data4repos/hypothesis_3_Juce.csv', header=None)
+df_juce = pd.read_csv('/Users/ekaterina/github_repos/ITMO_STUDY/Zadachi_ITMO_teorver_statistica/hypothesis_3.csv', header=None)
 print(df_juce)
 
 n = 20  # объем выборки
-a = 1000 # количество минут
+a = 1000 # количество милилитров
 e = 0.05 # уровень значимости
 
 MEAN = df_juce.mean()
@@ -27,12 +33,12 @@ S = (np.var(df_juce[0], ddof=1))**0.5
 print("Дисперсия несмещенная", S)
 # P_руками = 3.162*((29.321-26)/2.449)
 
-P_vib = ((n**0.5)*(MEAN-a))/(S**0.5)
+P_vib = ((n**0.5)*(MEAN-a))/S
 #print ("RUCAMI", P_руками)
 print ("P_vib",P_vib)
-print("C", t.ppf(1-(0.05/2), 19))
+print("C", t.ppf(1-0.05/2,19))
 
-print("If P(x)< c Гипотезу принимаем, если > - отвергаем ")
+print("If P(x)< c Гипотезу принимаем, если > - отвергаем: то гипотеза о том, что средний объем каждой упаковки сока равен  литру, не отвергается.")
 
 
 
