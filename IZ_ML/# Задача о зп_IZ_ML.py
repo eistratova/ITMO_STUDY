@@ -31,32 +31,35 @@ print(df.info())
 # для этого сначала удостоверимся-есть ли они там
 
 mask = df[(df['REGION_NAME'] == 'Томская область') | (df['REGION_NAME'] == 'Самарская область')]
-print(mask)
+print(" Томская и Самарская области", mask)
 
 df_new = df[(df['REGION_NAME'] != 'Томская область') & (df['REGION_NAME'] != 'Самарская область')]
-df_new
+print("Без Томсклй и Самарской области", df_new)
 
 # Отсортируем данные по объему зп
-df_new = df_new.sort_values(by=['SALARY'])
-print(df_new)
+df_new_sort = df_new.sort_values(by=['SALARY'])
+print(df_new_sort)
 
-df_new = df_new.reset_index()  #  Сбросим индекс
-print(df_new)
+df_new_sort = df_new_sort.reset_index()  #  Сбросим индекс
+print("Отсортированная по объему ЗП таблица",df_new_sort)
 
 #  У нас индекс начинается с 0, нам надо с 1, для этого повысим индекс
-df_new.index += 1
-print(df_new.head(20))
+df_new_sort.index += 1
+print("Отсортированная по объему ЗП таблица c индексацией с 1",df_new_sort.head(20))
 
 
 # Выводим требуемые элементы вариационного ряда
-print("21, 37,41 элементы", df_new.loc[[21, 37, 41]])
+print("21, 37,41 элементы", df_new_sort.loc[[21, 37, 41]])
+
+# Выводим требуемые элементы вариационного ряда последующие
+print("22, 38,42 элементы", df_new_sort.loc[[22, 38, 42]])
 
 # Выборочное среднее
-mean = df_new['SALARY'].mean()
+mean = df_new_sort['SALARY'].mean()
 
-print(mean)
+print("Выборочное среднее", mean)
 
-print("выборочная медиана 0,5", np.quantile(df_new['SALARY'], 0.5))
+print("выборочная медиана 0,5", np.quantile(df_new_sort['SALARY'], 0.5))
 
 '''
 print("Строим гистограмму", plt.hist(df_new[1], bins=10))
